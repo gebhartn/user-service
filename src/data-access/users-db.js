@@ -1,6 +1,8 @@
 export function makeUsersDb({ makeDb }) {
   const db = makeDb()
 
+  const selectRows = result => result.rows
+
   return Object.freeze({
     findAll,
     findById,
@@ -18,7 +20,7 @@ export function makeUsersDb({ makeDb }) {
       values: [count, start],
     }
 
-    return db.query({ query })
+    return selectRows(db.query({ query }))
   }
 
   async function findById({ id }) {
@@ -28,7 +30,7 @@ export function makeUsersDb({ makeDb }) {
       values: [id],
     }
 
-    return db.query({ query })
+    return selectRows(db.query({ query }))
   }
 
   async function findByEmail({ email }) {
@@ -38,7 +40,7 @@ export function makeUsersDb({ makeDb }) {
       values: [email],
     }
 
-    return db.query({ query })
+    return selectRows(db.query({ query }))
   }
 
   async function findByHash({ user }) {
@@ -48,7 +50,7 @@ export function makeUsersDb({ makeDb }) {
       values: [user.hash],
     }
 
-    return db.query({ query })
+    return selectRows(db.query({ query }))
   }
 
   async function insert({ user }) {
@@ -59,7 +61,7 @@ export function makeUsersDb({ makeDb }) {
       values: [user.email, user.firstName, user.lastName, user.password],
     }
 
-    return db.query({ query })
+    return selectRows(db.query({ query }))
   }
 
   async function update({ id, user }) {
@@ -70,7 +72,7 @@ export function makeUsersDb({ makeDb }) {
       values: [user.email, user.firstName, user.lastName, user.password, id],
     }
 
-    return db.query({ query })
+    return selectRows(db.query({ query }))
   }
 
   async function remove({ id }) {
@@ -80,6 +82,6 @@ export function makeUsersDb({ makeDb }) {
       values: [id],
     }
 
-    return db.query({ query })
+    return selectRows(db.query({ query }))
   }
 }
