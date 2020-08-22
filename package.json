@@ -5,7 +5,7 @@
   "author": "gebhartn <nicholas.gebhart@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "nodemon --exec babel-node src/index"
+    "start:dev": "nodemon -r dotenv/config --exec babel-node src/index"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.11.0",
@@ -21,6 +21,8 @@
     "@babel/core": "^7.11.4",
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.11.0",
-    "@babel/runtime": "^7.11.2"
+    "@babel/runtime": "^7.11.2",
+    "dotenv": "^8.2.0",
+    "pg": "^8.3.2"
   }
 }
