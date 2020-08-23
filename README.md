@@ -22,7 +22,7 @@ DB_HOST=localhost
 DB_PORT=5432:5432
 ```
 
-Once you've got a valid configuration file, you can use the `Makefile` to get started.
+Once you've got a valid configuration file, you can use the [Makefile](Makefile) to get started.
 
 The easiest way to run the service for the first time would be `make dev` which will spin up a PG container, write the schema, install dependencies, and start the development server.
 
