@@ -5,7 +5,7 @@
   "author": "gebhartn <nicholas.gebhart@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "nodemon -r dotenv/config --exec babel-node src/index"
+    "start:dev": "yarn && nodemon -r dotenv/config --exec babel-node src/index"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.11.0",
