@@ -5,6 +5,7 @@
   "author": "gebhartn <nicholas.gebhart@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start:dev": "yarn && nodemon -r dotenv/config --exec babel-node src/index"
   },
   "devDependencies": {
