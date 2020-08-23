@@ -10,7 +10,26 @@ TODO
 
 ## Local development
 
+In order to run the service locally, you must have Postgres, Node, Docker and Make installed. Also, Yarn is better than NPM.
+
+A valid .env configuration is required before getting started:
+
+```
+DB_USER=postgres
+DB_NAME=postgres
+DB_PASSWORD=postgres
+DB_HOST=localhost
+DB_PORT=5432:5432
+```
+
+Once you've got a valid configuration file, you can use the `Makefile` to get started.
+
+The easiest way to run the service for the first time would be `make dev` which will spin up a PG container, write the schema, install dependencies, and start the development server.
+
+## Running tests
+
 TODO
+
 
 ## Author
 
