@@ -8,9 +8,9 @@ This is a standalone service for managing users in a distributed system, with th
 
 | Route    | Description   |
 |----------|:-------------:|
-| /v1/health | health metrics |
-| /v1/users  |  users-api   |
-| v1/docs    | swagger docs |
+| /v1/health | Health endpoint |
+| /v1/users  |  API root route   |
+| /v1/docs    | Swagger documentation |
 
 ## Local development
 
