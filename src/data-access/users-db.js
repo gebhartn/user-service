@@ -31,7 +31,7 @@ export function makeUsersDb({ makeDb }) {
       values: [id],
     }
 
-    return selectRows(await db.query({ query }))
+    return selectRows(await db.query({ query }))[0]
   }
 
   async function findByEmail({ email }) {
@@ -41,7 +41,7 @@ export function makeUsersDb({ makeDb }) {
       values: [email],
     }
 
-    return selectRows(await db.query({ query }))
+    return selectRows(await db.query({ query }))[0]
   }
 
   async function findByHash({ hash }) {
@@ -51,7 +51,7 @@ export function makeUsersDb({ makeDb }) {
       values: [hash],
     }
 
-    return selectRows(await db.query({ query }))
+    return selectRows(await db.query({ query }))[0]
   }
 
   async function insert({ user }) {
@@ -75,11 +75,11 @@ export function makeUsersDb({ makeDb }) {
     const query = {
       name: 'usr-update',
       text:
-        'update users set email=$1, first_name=$2, last_name=$3, password=$4 where id=$5',
-      values: [user.email, user.firstName, user.lastName, user.password, id],
+        'update users set email=$1, first_name=$2, last_name=$3, hash_code=$4 where id=$5 returning id, email, first_name, last_name, hash_code',
+      values: [user.email, user.firstName, user.lastName, user.hash, id],
     }
 
-    return selectRows(await db.query({ query }))
+    return selectRows(await db.query({ query }))[0]
   }
 
   async function remove({ id }) {
