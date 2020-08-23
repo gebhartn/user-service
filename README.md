@@ -30,7 +30,6 @@ The easiest way to run the service for the first time would be `make dev` which 
 
 TODO
 
-
 ## Author
 
 - [Nicholas Gebhart](https://nicholasgebhart.com)
