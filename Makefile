@@ -35,8 +35,14 @@ run-dev: env-DB_USER env-DB_PASSWORD env-DB_HOST env-DB_PORT
 refresh: env-DB_USER env-DB_PASSWORD env-DB_HOST env-DB_PORT env-DB_NAME
 	echo "Writing database schema";
 	echo;
-	psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f schema.sql
+	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f schema.sql
 
 .SILENT:
 dev: database refresh run-dev
 	echo "Starting local"
+
+list:
+	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f select.sql
+
+seed:
+	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f seed.sql
