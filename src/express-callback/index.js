@@ -1,5 +1,5 @@
 export function makeCallback(controller) {
-  return (req, res) => {
+  return async (req, res) => {
     const request = {
       body: req.body,
       query: req.query,
@@ -14,16 +14,16 @@ export function makeCallback(controller) {
       },
     }
 
-    controller(request)
-      .then(response => {
-        if (response.headers) {
-          res.set(response.headers)
-        }
-        res.type('json')
-        res.status(response.status).send(response.body)
-      })
-      .catch(() =>
-        res.status(500).send({ error: 'An unknown error occurred.' })
-      )
+    try {
+      const response = await controller(request)
+
+      if (response.headers) {
+        res.set(response.headers)
+      }
+      res.type('json')
+      res.status(response.status).send(response.body)
+    } catch (e) {
+      res.status(500).send({ error: 'An unknown error occurred.' })
+    }
   }
 }
