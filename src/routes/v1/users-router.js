@@ -5,3 +5,4 @@ import { makeCallback } from '../../express-callback'
 export const users = Router()
 
 users.post('/', makeCallback(userController.postUser))
+users.get('/', makeCallback(userController.getUsers))
