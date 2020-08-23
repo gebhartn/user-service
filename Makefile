@@ -18,31 +18,37 @@ env-%:
 		exit 1; \
 	fi
 
-database: env-DB_USER env-DB_PASSWORD env-DB_HOST env-DB_PORT env-DB_NAME
-	echo "Starting a postgres database via Docker";
-	echo;
-	docker run --rm --name pg-docker \
-		-e POSTGRES_USER=${DB_USER} \
-		-e POSTGRES_PASSWORD=${DB_PASSWORD} \
-		-p ${DB_PORT} \
-		-d ${DB_NAME} && sleep 2s
+.SILENT:
+database: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST
+	echo "Starting a postgres database via Docker...";
+	docker-compose up -d && sleep 2s && \
+	PGPASSWORD=${DB_PASSWORD} psql -h ${DB_HOST} -U ${DB_USER} -f db/create.sql &>/dev/null
 
-run-dev: env-DB_USER env-DB_PASSWORD env-DB_HOST env-DB_PORT
-	echo "Starting up node server, happy hacking";
-	echo;
+run-dev: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST
+	echo "Starting up node server, happy hacking...";
 	yarn start:dev
 
-refresh: env-DB_USER env-DB_PASSWORD env-DB_HOST env-DB_PORT env-DB_NAME
-	echo "Writing database schema";
-	echo;
-	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f db/schema.sql
-
-.SILENT:
-dev: database refresh run-dev
-	echo "Starting local"
-
-list:
-	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f db/select.sql
+create-schemas:
+	echo "Writing schema for database(s)...";
+	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f db/schema.sql &>/dev/null && \
+	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_TEST} -h ${DB_HOST} -U ${DB_USER} -f db/schema.sql &>/dev/null
 
 seed:
-	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f db/seed.sql
+	echo "Seeding database(s)...";
+	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f db/seed.sql >/dev/null && \
+	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_TEST} -h ${DB_HOST} -U ${DB_USER} -f db/seed.sql >/dev/null
+
+.SILENT:
+dev: database create-schemas seed run-dev
+
+list: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST
+	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f db/select.sql
+
+list-test: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST
+	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_TEST} -h ${DB_HOST} -U ${DB_USER} -f db/select.sql
+
+drop-database:
+	PGPASSWORD=${DB_PASSWORD} psql -h ${DB_HOST} -U ${DB_USER} -f db/drop.sql >/dev/null
+
+clean: drop-database
+	docker stop user_db
