@@ -1,8 +1,11 @@
 export function buildMakeUser({ md5 }) {
-  return function makeUser({ email, firstName, lastName, password } = {}) {
+  function validate({ email, password }) {
     if (!email) throw new Error('User must have an email.')
-
     if (!password) throw new Error('User must have a password.')
+  }
+
+  return function makeUser({ email, firstName, lastName, password } = {}) {
+    validate({ email, password })
 
     let hash
 
