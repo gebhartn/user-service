@@ -19,7 +19,7 @@ export function buildMakeUser({ md5, validate }) {
     })
 
     function makeHash() {
-      return md5(email + (firstName || '') + (lastName || '') + password)
+      return md5(email + (firstName || '') + (lastName || ''))
     }
   }
 }
