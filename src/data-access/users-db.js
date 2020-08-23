@@ -20,7 +20,7 @@ export function makeUsersDb({ makeDb }) {
       values: [count, start],
     }
 
-    return selectRows(db.query({ query }))
+    return selectRows(await db.query({ query }))
   }
 
   async function findById({ id }) {
@@ -30,7 +30,7 @@ export function makeUsersDb({ makeDb }) {
       values: [id],
     }
 
-    return selectRows(db.query({ query }))
+    return selectRows(await db.query({ query }))
   }
 
   async function findByEmail({ email }) {
@@ -40,28 +40,34 @@ export function makeUsersDb({ makeDb }) {
       values: [email],
     }
 
-    return selectRows(db.query({ query }))
+    return selectRows(await db.query({ query }))
   }
 
-  async function findByHash({ user }) {
+  async function findByHash({ hash }) {
     const query = {
       name: 'usr-findbyhash',
       text: 'select * from users where hash_code=$1',
-      values: [user.hash],
+      values: [hash],
     }
 
-    return selectRows(db.query({ query }))
+    return selectRows(await db.query({ query }))
   }
 
   async function insert({ user }) {
     const query = {
       name: 'usr-insert',
       text:
-        'insert into users(email, first_name, last_name, password) values($1, $2, $3, $4) returning id',
-      values: [user.email, user.firstName, user.lastName, user.password],
+        'insert into users(email, first_name, last_name, password, hash_code) values($1, $2, $3, $4, $5) returning id',
+      values: [
+        user.email,
+        user.firstName,
+        user.lastName,
+        user.password,
+        user.hash,
+      ],
     }
 
-    return selectRows(db.query({ query }))
+    return selectRows(await db.query({ query }))[0]
   }
 
   async function update({ id, user }) {
@@ -72,7 +78,7 @@ export function makeUsersDb({ makeDb }) {
       values: [user.email, user.firstName, user.lastName, user.password, id],
     }
 
-    return selectRows(db.query({ query }))
+    return selectRows(await db.query({ query }))
   }
 
   async function remove({ id }) {
@@ -82,6 +88,6 @@ export function makeUsersDb({ makeDb }) {
       values: [id],
     }
 
-    return selectRows(db.query({ query }))
+    return selectRows(await db.query({ query }))
   }
 }
