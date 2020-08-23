@@ -16,7 +16,8 @@ export function makeUsersDb({ makeDb }) {
   async function findAll({ count, start }) {
     const query = {
       name: 'usr-findall',
-      text: 'select * from users limit $1 offset $2',
+      text:
+        'select id, email, first_name, last_name, created_at, updated_at, updated_by_user_id, hash_code from users limit $1 offset $2',
       values: [count, start],
     }
 
