@@ -3,7 +3,6 @@ import { makeUser } from '../user'
 export function makeAddUser({ usersDb }) {
   return async function addUser(body) {
     const user = makeUser(body)
-
     const exists = await usersDb.findByEmail({ email: user.getEmail() })
 
     if (exists.length) throw new Error('User already exists')
