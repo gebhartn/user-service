@@ -1,7 +1,12 @@
 # .codeclimate.yml
 version: "2"
 checks:
-  # Diable checks for similar code.
+  # Increase allowed complexity.
+  # Because currying isn't complex
+  method-complexity:
+    config:
+      threshold: 6
+  # Disable checks for similar code.
   # Because this creates too many false positives.
   similar-code:
     enabled: false
