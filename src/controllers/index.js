@@ -4,6 +4,7 @@ import { addUser } from '../use-cases'
 import { makePostUser } from './post-user'
 
 const hash = password => bcrypt.hashSync(password, 8)
+const validate = str => str.trim().length > 5
 
-export const postUser = makePostUser({ addUser, hash })
+export const postUser = makePostUser({ addUser, hash, validate })
 export const userController = Object.freeze({ postUser })
