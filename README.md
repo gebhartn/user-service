@@ -6,20 +6,24 @@ This is a standalone service for managing users in a distributed system, with th
 
 ## Documentation
 
-TODO
+| Route    | Description   |
+|----------|:-------------:|
+| /v1/health | health metrics |
+| /v1/users  |  users-api   |
+| v1/docs    | swagger docs |
 
 ## Local development
 
-In order to run the service locally, you must have Postgres, Node, Docker and Make installed. Also, Yarn is better than NPM.
+In order to run the service locally, you must have Postgres, Node, Docker, docker-compose and Make installed. Also, Yarn is better than NPM.
 
 A valid .env configuration is required before getting started:
 
 ```
-DB_USER=postgres
-DB_NAME=postgres
-DB_PASSWORD=postgres
+DB_USER=userapp
+DB_TEST=users_test
+DB_NAME=users
 DB_HOST=localhost
-DB_PORT=5432:5432
+DB_PASSWORD=postgres
 ```
 
 Once you've got a valid configuration file, you can use the [Makefile](Makefile) to get started.
