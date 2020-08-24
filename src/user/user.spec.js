@@ -11,13 +11,43 @@ describe('user', () => {
     expect(user.getEmail()).toBe(email)
   })
 
-  it.todo('can have an email')
+  it('can have a password', () => {
+    const password = 'ordinarycorrupthumanlove'
 
-  it.todo('can have a password')
+    const fakeUser = makeFakeUser({ password })
+    const user = makeUser(fakeUser)
 
-  it.todo('van have a hash')
+    expect(user.getPassword()).toBe(password)
+  })
 
-  it.todo('can have a first name')
+  it('can have a hash', () => {
+    const overrides = {
+      email: 'Nicholas@gmail.com',
+      firstName: 'Nicholas',
+      lastName: 'Gebhart',
+    }
 
-  it.todo('can have a last name')
+    const fakeUser = makeFakeUser({ ...overrides })
+    const user = makeUser(fakeUser)
+
+    expect(user.getHash()).toBe('f10433f8166a05df94c50bea588fd652')
+  })
+
+  it('can have a first name', () => {
+    const firstName = 'Nicholas'
+
+    const fakeUser = makeFakeUser({ firstName })
+    const user = makeUser(fakeUser)
+
+    expect(user.getFirstName()).toBe(firstName)
+  })
+
+  it('can have a last name', () => {
+    const lastName = 'Gebhart'
+
+    const fakeUser = makeFakeUser({ lastName })
+    const user = makeUser(fakeUser)
+
+    expect(user.getLastName()).toBe(lastName)
+  })
 })
