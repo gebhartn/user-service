@@ -5,7 +5,7 @@ export function makeAddUser({ usersDb }) {
     const user = makeUser(body)
     const exists = await usersDb.findByEmail({ email: user.getEmail() })
 
-    if (exists.length) throw new Error('User already exists')
+    if (exists) throw new Error('User already exists')
 
     return usersDb.insert({
       user: {

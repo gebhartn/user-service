@@ -4,21 +4,6 @@
   "main": "index.js",
   "author": "gebhartn <nicholas.gebhart@gmail.com>",
   "license": "MIT",
-  "jest": {
-    "clearMocks": true,
-    "displayName": "users-service",
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/__tests__/"
-    ],
-    "verbose": true,
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/vendor/**",
-      "!**/__tests__/**"
-    ]
-  },
   "scripts": {
     "build": "yarn clean && babel src -d dist",
     "now-build": "yarn buld",

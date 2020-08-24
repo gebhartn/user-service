@@ -7,8 +7,8 @@ import { makeGetUsers } from './get-users'
 import { health } from './api-health'
 import { notFound as not } from './not-found'
 
-const hash = password => bcrypt.hashSync(password, 8)
-const validate = str => str.trim().length > 5
+export const hash = password => bcrypt.hashSync(password, 8)
+export const validate = str => str.trim().length > 5
 
 export const postUser = makePostUser({ addUser, hash, validate })
 export const patchUser = makePatchUser({ editUser })

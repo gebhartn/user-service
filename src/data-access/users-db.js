@@ -58,7 +58,7 @@ export function makeUsersDb({ makeDb }) {
     const query = {
       name: 'usr-insert',
       text:
-        'insert into users(email, first_name, last_name, password, hash_code) values($1, $2, $3, $4, $5) returning id',
+        'insert into users(email, first_name, last_name, password, hash_code) values($1, $2, $3, $4, $5) returning id, email, first_name, last_name, hash_code, created_at, updated_at',
       values: [
         user.email,
         user.firstName,
