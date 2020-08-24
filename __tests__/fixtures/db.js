@@ -1,6 +1,6 @@
 import { Pool } from 'pg'
 
-const config = { connectionString: process.env.DB_HEROKU }
+const config = { connectionString: process.env.DATABASE_URL }
 
 const pool = new Pool({ ...config })
 
