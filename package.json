@@ -8,7 +8,8 @@
     "clearMocks": true,
     "displayName": "users-service",
     "testPathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "/__tests__/"
     ],
     "verbose": true,
     "collectCoverageFrom": [
@@ -19,12 +20,17 @@
     ]
   },
   "scripts": {
+    "build": "yarn clean && babel src -d dist",
+    "now-build": "yarn buld",
+    "clean": "rimraf dist",
+    "start": "yarn clean && yarn build && node -r dotenv/config dist/index.js",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start:dev": "yarn && nodemon -r dotenv/config --exec babel-node src/index",
     "test": "cross-env NODE_ENV=testing jest --verbose --runInBand --forceExit",
     "coverage": "cross-env NODE_ENV=testing jest --coverage --detectOpenHandles --forceExit || true"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
     "@babel/plugin-transform-runtime": "^7.11.0",
     "babel-jest": "^26.3.0",
     "eslint": "^7.7.0",
