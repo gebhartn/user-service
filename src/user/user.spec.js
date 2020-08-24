@@ -1,43 +1,23 @@
-// import { makeUser } from './'
+import { makeFakeUser } from '../../__tests__/fixtures/user'
+import { makeUser } from './'
 
 describe('user', () => {
-  it('must have an id', () => {
-    throw new Error('Not yet implemented')
+  it('can have an email', () => {
+    const email = 'Nicholas@gmail.com'
+
+    const fakeUser = makeFakeUser({ email })
+    const user = makeUser(fakeUser)
+
+    expect(user.getEmail()).toBe(email)
   })
 
-  it('must have an email', () => {
-    throw new Error('Not yet implemented')
-  })
+  it.todo('can have an email')
 
-  it('must have a password', () => {
-    throw new Error('Not yet implemented')
-  })
+  it.todo('can have a password')
 
-  it('must have a createdOn date', () => {
-    throw new Error('Not yet implemented')
-  })
+  it.todo('van have a hash')
 
-  it('must have an updatedOn date', () => {
-    throw new Error('Not yet implemented')
-  })
+  it.todo('can have a first name')
 
-  it('must have a hash', () => {
-    throw new Error('Not yet implemented')
-  })
-
-  it('can have a first name', () => {
-    throw new Error('Not yet implemented')
-  })
-
-  it('can have a last name', () => {
-    throw new Error('Not yet implemented')
-  })
-
-  it('validates the email', () => {
-    throw new Error('Not yet implemented')
-  })
-
-  it('validates the password', () => {
-    throw new Error('Not yet implemented')
-  })
+  it.todo('can have a last name')
 })
