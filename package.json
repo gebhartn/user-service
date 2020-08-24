@@ -11,8 +11,8 @@
     "start": "yarn clean && yarn build && node -r dotenv/config dist/index.js",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start:dev": "yarn && nodemon -r dotenv/config --exec babel-node src/index",
-    "test": "cross-env NODE_ENV=testing jest --verbose --runInBand --forceExit",
-    "coverage": "cross-env NODE_ENV=testing jest --coverage --detectOpenHandles --forceExit || true"
+    "test": "jest --verbose --runInBand --forceExit",
+    "coverage": "test --coverage --detectOpenHandles --forceExit || true"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
