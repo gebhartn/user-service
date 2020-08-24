@@ -18,4 +18,12 @@ const port = process.env.PORT || 8080
 const app = makeApp({ middleware, routes })
 const server = http.createServer(app)
 
-server.listen(port, () => console.log('Listening on port: ' + port))
+server.listen(port, () =>
+  console.log(
+    'Server listening on port: ' +
+      port +
+      '\n' +
+      'Database connected at port: ' +
+      process.env.DB_PORT
+  )
+)
