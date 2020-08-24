@@ -18,22 +18,27 @@ env-%:
 		exit 1; \
 	fi
 
+init: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST env-DB_PORT
+
 .SILENT:
-database: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST
+database: init
+	@printf "$(ERR_COLOR)";
+	@( read -p "WARNING: This will wipe the database, are you sure you want to continue? [y/N]: " sure && case "$$sure" in [yY]) true;; *) false;; esac )
+	@printf "$(NO_COLOR)";
 	echo "Starting a postgres database via Docker...";
 	docker-compose up -d && sleep 2s && \
 	PGPASSWORD=${DB_PASSWORD} psql -h ${DB_HOST} -U ${DB_USER} -f db/create.sql &>/dev/null
 
-run-dev: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST
+run-dev: init
 	echo "Starting up node server, happy hacking...";
 	yarn start:dev
 
-create-schemas:
+create-schemas: init
 	echo "Writing schema for database(s)...";
 	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f db/schema.sql &>/dev/null && \
 	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_TEST} -h ${DB_HOST} -U ${DB_USER} -f db/schema.sql &>/dev/null
 
-seed:
+seed: init
 	echo "Seeding database(s)...";
 	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f db/seed.sql >/dev/null && \
 	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_TEST} -h ${DB_HOST} -U ${DB_USER} -f db/seed.sql >/dev/null
@@ -41,14 +46,14 @@ seed:
 .SILENT:
 dev: database create-schemas seed run-dev
 
-list: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST
+list: init
 	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f db/select.sql
 
-list-test: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST
+list-test: init
 	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_TEST} -h ${DB_HOST} -U ${DB_USER} -f db/select.sql
 
-drop-database:
+drop-database: init
 	PGPASSWORD=${DB_PASSWORD} psql -h ${DB_HOST} -U ${DB_USER} -f db/drop.sql >/dev/null
 
-clean: drop-database
-	docker stop user_db
+clean: init drop-database
+	docker stop user_db >/dev/null

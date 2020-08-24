@@ -24,6 +24,7 @@ DB_TEST=users_test
 DB_NAME=users
 DB_HOST=localhost
 DB_PASSWORD=postgres
+DB_PORT=5432
 ```
 
 Once you've got a valid configuration file, you can use the [Makefile](Makefile) to get started.
