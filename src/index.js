@@ -1,4 +1,4 @@
-import https from 'https'
+import http from 'http'
 
 import { makeApp } from './app'
 import { middleware } from './middleware'
@@ -16,7 +16,7 @@ process.on('unhandledRejection', e => {
 
 const port = process.env.PORT || 8080
 const app = makeApp({ middleware, routes })
-const server = https.createServer(app)
+const server = http.createServer(app)
 
 server.listen(port, () =>
   console.log(
