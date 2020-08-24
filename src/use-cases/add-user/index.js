@@ -1,4 +1,4 @@
-import { makeUser } from '../user'
+import { makeUser } from '../../user'
 
 export function makeAddUser({ usersDb }) {
   return async function addUser(body) {

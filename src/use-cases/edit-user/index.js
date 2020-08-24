@@ -1,13 +1,8 @@
-import { makeUser } from '../user'
+import { makeUser } from '../../user'
 
 export function makeEditUser({ usersDb }) {
   return async function editUser({ id, ...changes } = {}) {
-    const existing = await usersDb.findById({ id })
-
-    if (!existing) throw new RangeError('User not found.')
-
-    delete existing.password
-
+    const existing = await findExistingUser({ id })
     const user = makeUser({ ...existing, ...changes })
 
     if (user.getHash() === existing.hash_code) {
@@ -25,5 +20,14 @@ export function makeEditUser({ usersDb }) {
     })
 
     return { ...existing, ...updated }
+  }
+
+  async function findExistingUser({ id }) {
+    const existing = await usersDb.findById({ id })
+
+    if (!existing) throw new RangeError('User not found.')
+
+    delete existing.password
+    return existing
   }
 }

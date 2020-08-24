@@ -16,8 +16,6 @@ export function makeGetUsers({ listUsers }) {
         body: users,
       }
     } catch (e) {
-      console.error(e)
-
       return {
         headers,
         status: 400,

@@ -19,7 +19,6 @@ export function makePatchUser({ editUser }) {
         body: { patched },
       }
     } catch (e) {
-      console.log(e)
       if (e.name === 'RangeError') {
         return {
           headers: {
