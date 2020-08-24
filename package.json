@@ -6,9 +6,9 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn clean && babel src -d dist",
-    "now-build": "yarn buld",
+    "now-build": "yarn build",
     "clean": "rimraf dist",
-    "start": "yarn clean && yarn build && node -r dotenv/config dist/index.js",
+    "start": "yarn build && node -r dotenv/config dist/index.js",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start:dev": "yarn && nodemon -r dotenv/config --exec babel-node src/index",
     "test": "jest --verbose --runInBand --forceExit",
