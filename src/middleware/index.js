@@ -1,11 +1,16 @@
-import express from 'express'
-import cors from 'cors'
-import helmet from 'helmet'
-import { inputError } from './input-error'
+import { common } from './common'
+import { errors } from './errors'
 
-export function middleware({ app }) {
-  app.use(cors())
-  app.use(helmet())
-  app.use(express.json())
-  app.use(inputError)
+function makeMiddleware({ middlewares }) {
+  return function middleware({ app }) {
+    for (const middleware of middlewares) {
+      middleware(app)
+    }
+  }
 }
+
+export const middleware = makeMiddleware({
+  middlewares: [...common, ...errors],
+})
+
+export { inspectToken } from './inspect-token'
