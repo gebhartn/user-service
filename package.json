@@ -12,7 +12,7 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start:dev": "yarn && nodemon -r dotenv/config --exec babel-node src/index",
     "test": "jest --verbose --runInBand --forceExit",
-    "coverage": "test --coverage --detectOpenHandles --forceExit || true"
+    "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
