@@ -11,5 +11,10 @@ module.exports = {
     '!**/vendor/**',
     '!**/__tests__/**',
     '!**/dist/**',
+    '!**/src/middleware/**',
+    '!**/src/routes/**',
+    '!**/src/express-callback/**',
+    '!**/src/app/**',
+    '!**/src/*',
   ],
 }
