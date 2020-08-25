@@ -18,12 +18,16 @@ describe('add user', () => {
     expect(inserted.email).toBe(newUser.email)
   })
 
-  it('throws if user exists', async () => {
+  it('throws if a user already exists', async () => {
     const newUser = makeFakeUser()
     const addUser = makeAddUser({ usersDb })
 
     await addUser(newUser)
 
-    await expect(addUser(newUser)).rejects.toThrow('User already exists')
+    try {
+      await addUser(newUser)
+    } catch (e) {
+      expect(e.message).toMatch('User already exists')
+    }
   })
 })
