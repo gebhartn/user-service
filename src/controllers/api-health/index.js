@@ -5,21 +5,11 @@ export function health() {
     timestamp: new Date().toUTCString(),
   }
 
-  try {
-    return {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      status: 200,
-      body: { ...check },
-    }
-  } catch (e) {
-    return {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      status: 503,
-      body: { ...check, message: e },
-    }
+  return {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    status: 200,
+    body: { ...check },
   }
 }
