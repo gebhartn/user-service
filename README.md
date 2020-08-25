@@ -1,6 +1,6 @@
 # Users Service
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/1085a7c8e0eac2e53638/maintainability)](https://codeclimate.com/github/gebhartn/user-service/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1085a7c8e0eac2e53638/maintainability)](https://codeclimate.com/github/gebhartn/user-service/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/1085a7c8e0eac2e53638/test_coverage)](https://codeclimate.com/github/gebhartn/user-service/test_coverage)
 
 This is a standalone service for managing users in a distributed system, with the eventual intent of being connected to a more purposeful network of services.
 
