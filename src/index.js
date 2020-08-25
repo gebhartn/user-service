@@ -1,3 +1,5 @@
+import http from 'http'
+
 import { makeApp } from './app'
 import { middleware } from './middleware'
 import { routes } from './routes'
@@ -14,5 +16,6 @@ process.on('unhandledRejection', e => {
 
 const port = process.env.PORT || 8080
 const app = makeApp({ middleware, routes })
+const server = http.createServer(app)
 
-app.listen(port, () => console.log(port))
+server.listen(port, e => console.log(e, 'Server listening on port: ' + port))
