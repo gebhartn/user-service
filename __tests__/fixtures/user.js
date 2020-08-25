@@ -6,8 +6,6 @@ function md5(text) {
   return createHash('md5').update(text, 'utf-8').digest('hex')
 }
 
-let id = 0
-
 export function makeFakeUser(overrides) {
   const firstName = name.firstName()
   const lastName = name.lastName()
@@ -15,7 +13,6 @@ export function makeFakeUser(overrides) {
   const password = internet.password()
 
   const user = {
-    id: ++id,
     email,
     firstName,
     lastName,
@@ -25,7 +22,7 @@ export function makeFakeUser(overrides) {
     updatedOn: new Date().toUTCString(),
   }
 
-  user.hash = md5(email)
+  user.hash = md5(email + firstName + lastName)
 
   return {
     ...user,
