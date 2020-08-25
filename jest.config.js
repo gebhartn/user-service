@@ -17,6 +17,5 @@ module.exports = {
     '!**/src/express-callback/**',
     '!**/src/app/**',
     '!**/src/*',
-    '!**/src/data-access/*',
   ],
 }

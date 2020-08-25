@@ -1,16 +1,10 @@
 import { makeUsersDb } from './users-db'
 import { Pool } from 'pg'
-
-const connectionString =
-  process.env.NODE_ENV === 'production'
-    ? process.env.HEROKU_POSTGRESQL_ONYX_URL
-    : process.env.DATABASE_LOCAL
-
-const ssl = process.env.DATABASE_URL ? { rejectUnauthorized: false } : null
+import { dbConfig } from '../../config'
 
 const pool = new Pool({
-  connectionString,
-  ssl,
+  connectionString: dbConfig.connectionString,
+  ssl: dbConfig.ssl,
 })
 
 export function makeDb() {

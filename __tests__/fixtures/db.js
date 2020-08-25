@@ -1,17 +1,10 @@
 import { Pool } from 'pg'
+import { dbMock } from '../../config'
 
-const connectionString = process.env.DATABASE_URL
-  ? process.env.DATABASE_URL
-  : process.env.DATABASE_TEST
-
-const ssl = process.env.DATABASE_URL ? { rejectUnauthorized: false } : null
-
-const config = {
-  connectionString,
-  ssl,
-}
-
-const pool = new Pool({ ...config })
+const pool = new Pool({
+  connectionString: dbMock.connectionString,
+  ssl: dbMock.ssl,
+})
 
 export function makeDb() {
   return Object.freeze({ query, clear })
