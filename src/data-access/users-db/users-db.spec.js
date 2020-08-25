@@ -6,72 +6,105 @@ describe('users database', () => {
   let usersDb
 
   beforeEach(async () => {
+    await makeDb().clear()
     usersDb = makeUsersDb({ makeDb })
   })
 
   it('finds all users', async () => {
-    const found = await usersDb.findAll({ count: 2, start: 0 })
+    const inserts = await Promise.all(
+      [
+        { user: makeFakeUser() },
+        { user: makeFakeUser() },
+        { user: makeFakeUser() },
+      ].map(usersDb.insert)
+    )
 
-    expect(found.length).toBe(2)
+    const found = await usersDb.findAll({})
+
+    return expect(found.length).toBe(inserts.length)
   })
 
   it('takes a count and a start', async () => {
-    const found = await usersDb.findAll({ count: 2, start: 1 })
+    await Promise.all(
+      [
+        { user: makeFakeUser() },
+        { user: makeFakeUser() },
+        { user: makeFakeUser() },
+      ].map(usersDb.insert)
+    )
 
-    expect(found[0].id).toBe(2)
+    const found = await usersDb.findAll({ count: 2, start: 0 })
+
     expect(found.length).toBe(2)
+    expect(found[found.length - 1].id).toBe(found.length)
   })
 
   it('finds a user by id', async () => {
-    const user = await usersDb.findById({ id: 1 })
+    const user = await makeFakeUser()
+    await usersDb.insert({ user })
 
-    expect(user.email).toBe('juan@gmail.com')
+    const found = await usersDb.findById({ id: 1 })
+
+    expect(found.first_name).toEqual(user.firstName)
   })
 
   it('finds a user by email', async () => {
-    const user = await usersDb.findByEmail({ email: 'juan@gmail.com' })
+    const user = await makeFakeUser()
+    await usersDb.insert({ user })
 
-    expect(user.id).toBe(1)
+    const found = await usersDb.findByEmail({ email: user.email })
+
+    expect(found.email).toBe(user.email)
   })
 
   it('finds a user by hash', async () => {
-    const user = await usersDb.findByHash({ hash: 'fake_hashcode1' })
+    const user = await makeFakeUser()
+    await usersDb.insert({ user })
 
-    expect(user.email).toBe('juan@gmail.com')
+    const found = await usersDb.findByHash({ hash: user.hash })
+
+    expect(found.hash_code).toBe(user.hash)
   })
 
   it('inserts a new user', async () => {
     const user = makeFakeUser()
-    const result = await usersDb.insert({ user })
+    const found = await usersDb.insert({ user })
 
-    expect(result.email).toEqual(user.email)
+    expect(found.email).toEqual(user.email)
   })
 
   it('updates an existing user', async () => {
     const fake = makeFakeUser()
-    const firstName = 'Xxxtentacion'
-    const result = await usersDb.insert({ user: fake })
-    const user = await usersDb.update({
-      id: result.id,
+    const firstName = 'ThisNameDoesNotExist'
+    const inserted = await usersDb.insert({ user: fake })
+    const updated = await usersDb.update({
+      id: inserted.id,
       user: {
-        ...result,
+        ...inserted,
         firstName,
-        lastName: result.last_name,
-        hash: 'hash_is_invalid',
+        lastName: inserted.last_name,
+        hash: inserted.hash_code,
       },
     })
 
-    expect(user.first_name).toBe(firstName)
+    expect(updated.first_name).toBe(firstName)
   })
 
   it('deletes an existing user', async () => {
-    const newUser = makeFakeUser()
-    await usersDb.insert({ user: newUser })
-    const found = await usersDb.findAll({ count: 10, start: 0 })
-    const deleting = found[found.length - 1]
+    await Promise.all(
+      [
+        { user: makeFakeUser() },
+        { user: makeFakeUser() },
+        { user: makeFakeUser() },
+      ].map(usersDb.insert)
+    )
 
-    const result = await usersDb.remove({ id: deleting.id })
+    const before = await usersDb.findAll({ count: 10, start: 0 })
+    const { id } = before[before.length - 1]
 
-    expect(result.length).toBe(0)
+    await usersDb.remove({ id })
+    const after = await usersDb.findAll({ count: 10, start: 0 })
+
+    expect(after.length).toBe(before.length - 1)
   })
 })
