@@ -30,4 +30,26 @@ describe('post user controller', () => {
 
     expect(actual.status).toBe(400)
   })
+
+  it('throws on invalid email', async () => {
+    const postUser = makePostUser({ addUser: u => u, hash, validate })
+    const user = makeFakeUser({ email: 'weak' })
+
+    try {
+      await postUser({ body: user })
+    } catch (e) {
+      expect(e.message).toMatch('User must have a valid email')
+    }
+  })
+
+  it('throws on invalid password', async () => {
+    const postUser = makePostUser({ addUser: u => u, hash, validate })
+    const user = makeFakeUser({ password: 'weak' })
+
+    try {
+      await postUser({ body: user })
+    } catch (e) {
+      expect(e.message).toMatch('Password too weak')
+    }
+  })
 })
