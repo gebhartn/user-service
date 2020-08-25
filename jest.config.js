@@ -10,5 +10,6 @@ module.exports = {
     '!**/node_modules/**',
     '!**/vendor/**',
     '!**/__tests__/**',
+    '!**/dist/**',
   ],
 }
