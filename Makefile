@@ -18,7 +18,7 @@ env-%:
 		exit 1; \
 	fi
 
-init: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST env-DB_PORT
+init: env-DB_USER env-DB_TEST env-DB_NAME env-DB_PASSWORD env-DB_HOST env-DB_PORT env-DATABASE_LOCAL env-DATABASE_TEST
 
 .SILENT:
 database: init
