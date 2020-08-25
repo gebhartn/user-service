@@ -2,11 +2,15 @@ import { Pool } from 'pg'
 
 const connectionString = process.env.DATABASE_URL
   ? process.env.DATABASE_URL
-  : process.env.DB_LOCAL
+  : process.env.DATABASE_TEST
+
+const ssl = process.env.DATABASE_URL ? { rejectUnauthorized: false } : null
+
+console.log(connectionString)
 
 const config = {
   connectionString,
-  ssl: { rejectUnauthorized: false },
+  ssl,
 }
 
 const pool = new Pool({ ...config })
