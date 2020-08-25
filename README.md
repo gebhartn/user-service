@@ -19,11 +19,14 @@ In order to run the service locally, you must have Postgres, Node, Docker, docke
 A valid .env configuration is required before getting started:
 
 ```
+DATABASE_LOCAL="postgres://userapp:postgres@localhost:5432/users"
+DATABASE_TEST="postgres://userapp:postgres@localhost:5432/users_test"
+
 DB_USER=userapp
 DB_TEST=users_test
 DB_NAME=users
-DB_HOST=localhost
 DB_PASSWORD=postgres
+DB_HOST=localhost
 DB_PORT=5432
 ```
 
@@ -31,9 +34,13 @@ Once you've got a valid configuration file, you can use the [Makefile](Makefile)
 
 The easiest way to run the service for the first time would be `make dev` which will spin up a PG container, write the schema, install dependencies, and start the development server.
 
+Alternatively, the [Makefile](Makefile) exposes a means of teardown via `make clean` which will destroy the container.
+
 ## Running tests
 
-TODO
+The [ci](./github/workflows) script will run the coverage suite automatically upon pushing to master, but to run locally you may use `yarn coverage` or `yarn test` to generate coverage or run the test suite respectively.
+
+Note that as of writing this there is no setup or teardown of the test database, and so there may be edge case where tests fail because of a stateful testing environment.
 
 ## Author
 
