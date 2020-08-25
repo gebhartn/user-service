@@ -75,7 +75,7 @@ export function makeUsersDb({ makeDb }) {
     const query = {
       name: 'usr-update',
       text:
-        'update users set email=$1, first_name=$2, last_name=$3, hash_code=$4 where id=$5 returning id, email, first_name, last_name, hash_code',
+        'update users set email=$1, first_name=$2, last_name=$3, hash_code=$4 where id=$5 returning id, email, first_name, last_name, hash_code, created_at, updated_at',
       values: [user.email, user.firstName, user.lastName, user.hash, id],
     }
 

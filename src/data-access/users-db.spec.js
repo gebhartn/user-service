@@ -1,6 +1,7 @@
 import { makeDb } from '../../__tests__/fixtures/db'
 import { makeUsersDb } from './users-db'
 import { makeFakeUser } from '../../__tests__/fixtures/user'
+
 describe('users database', () => {
   let usersDb
 
@@ -52,7 +53,12 @@ describe('users database', () => {
     const result = await usersDb.insert({ user: fake })
     const user = await usersDb.update({
       id: result.id,
-      user: { ...result, firstName },
+      user: {
+        ...result,
+        firstName,
+        lastName: result.last_name,
+        hash: 'hash_is_invalid',
+      },
     })
 
     expect(user.first_name).toBe(firstName)

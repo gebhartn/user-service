@@ -6,8 +6,6 @@ const connectionString = process.env.DATABASE_URL
 
 const ssl = process.env.DATABASE_URL ? { rejectUnauthorized: false } : null
 
-console.log(connectionString)
-
 const config = {
   connectionString,
   ssl,
