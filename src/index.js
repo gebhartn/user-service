@@ -15,4 +15,6 @@ process.on('unhandledRejection', e => {
 const port = process.env.PORT || 8080
 const app = makeApp({ middleware, routes })
 
+console.log({ nightmare: 'aaaaaaaaa' })
+
 app.listen(port, () => console.log(port))
