@@ -1,6 +1,6 @@
-import { makeDb } from '../../__tests__/fixtures/db'
-import { makeUsersDb } from './users-db'
-import { makeFakeUser } from '../../__tests__/fixtures/user'
+import { makeDb } from '../../../__tests__/fixtures/db'
+import { makeUsersDb } from './'
+import { makeFakeUser } from '../../../__tests__/fixtures/user'
 
 describe('users database', () => {
   let usersDb
@@ -64,5 +64,14 @@ describe('users database', () => {
     expect(user.first_name).toBe(firstName)
   })
 
-  it.todo('deletes an existing user')
+  it('deletes an existing user', async () => {
+    const newUser = makeFakeUser()
+    await usersDb.insert({ user: newUser })
+    const found = await usersDb.findAll({ count: 10, start: 0 })
+    const deleting = found[found.length - 1]
+
+    const result = await usersDb.remove({ id: deleting.id })
+
+    expect(result.length).toBe(0)
+  })
 })

@@ -46,6 +46,9 @@ seed: init
 .SILENT:
 dev: database create-schemas seed run-dev
 
+.SILENT:
+build: database create-schemas seed
+
 list: init
 	PGPASSWORD=${DB_PASSWORD} psql -d ${DB_NAME} -h ${DB_HOST} -U ${DB_USER} -f db/select.sql
 
