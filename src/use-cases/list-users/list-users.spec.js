@@ -39,12 +39,14 @@ describe('list users', () => {
         { user: makeFakeUser() },
         { user: makeFakeUser() },
         { user: makeFakeUser() },
+        { user: makeFakeUser() },
+        { user: makeFakeUser() },
       ].map(usersDb.insert)
     )
 
     const result = await listUsers({ start: 0, count: 100 })
 
-    expect(result[result.length - 1].id).toBe(result.length)
+    expect(result[9].id).toBe(10)
   })
 
   it('returns users without count or start', async () => {
