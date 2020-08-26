@@ -2,7 +2,7 @@ SHELL := bash
 .SHELLFLAGS := -eu -o pipefail -c
 
 ifneq ("$(wildcard .env)","")
-  include .env
+  include *.env
   export
 endif
 
