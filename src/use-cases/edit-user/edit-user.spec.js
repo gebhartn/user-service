@@ -71,7 +71,7 @@ describe('edit user', () => {
     const userEdit = makeFakeUser()
 
     const existingUser = await usersDb.findById({ id: 1 })
-    const newUser = await editUser({ ...userEdit, id: 1 })
+    const newUser = await editUser({ changes: userEdit, id: 1 })
 
     return expect(newUser.hash).not.toBe(existingUser.hash)
   })

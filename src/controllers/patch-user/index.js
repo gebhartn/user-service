@@ -4,7 +4,7 @@ export function makePatchUser({ editUser }) {
       const { ...user } = request.body
 
       const updating = {
-        ...user,
+        changes: { ...user },
         id: request.params.id,
       }
 

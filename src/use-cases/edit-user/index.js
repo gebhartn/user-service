@@ -1,7 +1,7 @@
 import { makeUser } from '../../user'
 
 export function makeEditUser({ usersDb }) {
-  return async function editUser({ id, ...changes } = {}) {
+  return async function editUser({ id, changes } = {}) {
     const existing = await findExistingUser({ id })
     const user = makeUser({ ...existing, ...changes })
 
