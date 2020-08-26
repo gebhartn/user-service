@@ -1,5 +1,5 @@
 export function buildMakeUser({ md5 }) {
-  return function makeUser({ email, firstName, lastName, password } = {}) {
+  return function makeUser({ email, firstName, lastName, password }) {
     let hash
 
     return Object.freeze({

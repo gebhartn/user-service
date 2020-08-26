@@ -13,20 +13,24 @@ describe('edit user', () => {
     usersDb = makeUsersDb({ makeDb })
   })
 
+  afterAll(async () => {
+    await makeDb().clear()
+  })
+
   it('should error with no id', async () => {
     const editUser = makeEditUser({ usersDb })
     const userEdit = makeFakeUser({ id: undefined })
 
-    expect(editUser(userEdit)).rejects.toThrow('User not found.')
+    await expect(editUser(userEdit)).rejects.toThrow('User not found.')
   })
 
   it('should error with no arguments', async () => {
     const editUser = makeEditUser({ usersDb })
 
-    expect(editUser()).rejects.toThrow('User not found.')
+    await expect(editUser()).rejects.toThrow('User not found.')
   })
 
-  it('should combine existing user with incoming', async () => {
+  it('should combine existing user with incoming', async done => {
     const editUser = makeEditUser({ usersDb })
 
     const fake = makeFakeUser()
@@ -42,9 +46,10 @@ describe('edit user', () => {
     delete existing.password
 
     expect(user).toStrictEqual({ ...existing, ...user })
+    done()
   })
 
-  it('should return existing if nothing changes', async () => {
+  it('should return existing if nothing changes', async done => {
     const editUser = makeEditUser({ usersDb })
 
     const fake = makeFakeUser()
@@ -57,9 +62,10 @@ describe('edit user', () => {
     })
 
     expect(user.hash_code).toBe(existing.hash_code)
+    done()
   })
 
-  it('should edit a user', async () => {
+  it('should edit a user', async done => {
     const editUser = makeEditUser({ usersDb })
 
     const fake = makeFakeUser()
@@ -71,5 +77,6 @@ describe('edit user', () => {
     const newUser = await editUser({ ...userEdit, id: 1 })
 
     expect(newUser.hash_code).not.toBe(existingUser.hash_code)
+    done()
   })
 })

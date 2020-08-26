@@ -8,13 +8,11 @@ module.exports = {
   collectCoverageFrom: [
     '**/*.{js,jsx}',
     '!**/*.*.{js,jsx}',
-    '!**/node_modules/**',
-    '!**/vendor/**',
-    '!**/__tests__/**',
     '!**/dist/**',
     '!**/src/middleware/**',
     '!**/src/routes/**',
-    '!**/src/express-callback/**',
     '!**/src/app/**',
+    '!**/config/**',
+    '!**/src/express-callback/**',
   ],
 }

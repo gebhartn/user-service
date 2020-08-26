@@ -10,6 +10,10 @@ describe('users database', () => {
     usersDb = makeUsersDb({ makeDb })
   })
 
+  afterAll(async () => {
+    await makeDb().clear()
+  })
+
   it('finds all users', async () => {
     const inserts = await Promise.all(
       [

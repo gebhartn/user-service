@@ -8,8 +8,13 @@ describe('list users', () => {
 
   beforeAll(async () => {
     await makeDb().clear()
+
     usersDb = makeUsersDb({ makeDb })
     listUsers = makeListUsers({ usersDb })
+  })
+
+  afterAll(async () => {
+    await makeDb().clear()
   })
 
   it('sets start to 0 if negative', async () => {

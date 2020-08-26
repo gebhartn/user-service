@@ -8,6 +8,6 @@ import { port } from '../../config'
 
 const makeApp = buildMakeApp({ app: express() })
 const application = makeApp({ middleware, routes })
-const app = http.createServer(application)
+export const app = http.createServer(application)
 
 app.listen(port, () => console.log('Server listening on port: ' + port))

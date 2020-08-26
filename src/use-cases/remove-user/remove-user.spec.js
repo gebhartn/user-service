@@ -11,6 +11,10 @@ describe('edit user', () => {
     usersDb = makeUsersDb({ makeDb })
   })
 
+  afterAll(async () => {
+    await makeDb().clear()
+  })
+
   it('should error with no id', async () => {
     const removeUser = makeRemoveUser({ usersDb })
     const user = makeFakeUser({ id: undefined })

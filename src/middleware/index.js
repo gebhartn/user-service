@@ -10,7 +10,7 @@ function makeMiddleware({ middlewares }) {
 }
 
 export const middleware = makeMiddleware({
-  middlewares: [...common, ...errors],
+  middlewares: [...common],
 })
 
 export { inspectToken } from './inspect-token'
