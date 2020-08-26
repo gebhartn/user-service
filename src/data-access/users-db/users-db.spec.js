@@ -47,7 +47,7 @@ describe('users database', () => {
 
     const found = await usersDb.findById({ id: 1 })
 
-    expect(found.first_name).toEqual(user.firstName)
+    expect(found.firstName).toEqual(user.firstName)
   })
 
   it('finds a user by email', async () => {
@@ -65,7 +65,7 @@ describe('users database', () => {
 
     const found = await usersDb.findByHash({ hash: user.hash })
 
-    expect(found.hash_code).toBe(user.hash)
+    expect(found.hash).toBe(user.hash)
   })
 
   it('inserts a new user', async () => {
@@ -84,12 +84,10 @@ describe('users database', () => {
       user: {
         ...inserted,
         firstName,
-        lastName: inserted.last_name,
-        hash: inserted.hash_code,
       },
     })
 
-    expect(updated.first_name).toBe(firstName)
+    expect(updated.firstName).toBe(firstName)
   })
 
   it('deletes an existing user', async () => {

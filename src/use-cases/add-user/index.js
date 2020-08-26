@@ -14,6 +14,7 @@ export function makeAddUser({ usersDb }) {
         lastName: user.getLastName(),
         password: user.getPassword(),
         hash: user.getHash(),
+        updatedBy: user.getUpdatedBy(),
       },
     })
   }

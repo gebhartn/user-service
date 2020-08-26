@@ -5,7 +5,7 @@ export function makeEditUser({ usersDb }) {
     const existing = await findExistingUser({ id })
     const user = makeUser({ ...existing, ...changes })
 
-    if (user.getHash() === existing.hash_code) {
+    if (user.getHash() === existing.hash) {
       return existing
     }
 
@@ -16,6 +16,7 @@ export function makeEditUser({ usersDb }) {
         firstName: user.getFirstName(),
         lastName: user.getLastName(),
         hash: user.getHash(),
+        updatedBy: user.getUpdatedBy(),
       },
     })
 

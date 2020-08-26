@@ -17,7 +17,7 @@ export function makeUsersDb({ makeDb }) {
     const query = {
       name: 'usr-findall',
       text:
-        'select id, email, first_name, last_name, created_at, updated_at, updated_by_user_id, hash_code from users limit $1 offset $2',
+        'select id, email, "firstName", "lastName", "createdAt", "updatedAt", "updatedBy", hash from users limit $1 offset $2',
       values: [count, start],
     }
 
@@ -47,7 +47,7 @@ export function makeUsersDb({ makeDb }) {
   async function findByHash({ hash }) {
     const query = {
       name: 'usr-findbyhash',
-      text: 'select * from users where hash_code=$1',
+      text: 'select * from users where hash=$1',
       values: [hash],
     }
 
@@ -58,11 +58,12 @@ export function makeUsersDb({ makeDb }) {
     const query = {
       name: 'usr-insert',
       text:
-        'insert into users(email, first_name, last_name, password, hash_code) values($1, $2, $3, $4, $5) returning id, email, first_name, last_name, hash_code, created_at, updated_at',
+        'insert into users(email, "firstName", "lastName", "updatedBy", password, hash) values($1, $2, $3, $4, $5, $6) returning id, email, "firstName", "lastName", hash, "createdAt", "updatedAt"',
       values: [
         user.email,
         user.firstName,
         user.lastName,
+        user.updatedBy,
         user.password,
         user.hash,
       ],
@@ -75,8 +76,15 @@ export function makeUsersDb({ makeDb }) {
     const query = {
       name: 'usr-update',
       text:
-        'update users set email=$1, first_name=$2, last_name=$3, hash_code=$4 where id=$5 returning id, email, first_name, last_name, hash_code, created_at, updated_at',
-      values: [user.email, user.firstName, user.lastName, user.hash, id],
+        'update users set email=$1, "firstName"=$2, "lastName"=$3, "updatedBy"=$4, hash=$5 where id=$6 returning id, email, "firstName", "lastName", hash, "createdAt", "updatedAt"',
+      values: [
+        user.email,
+        user.firstName,
+        user.lastName,
+        user.updatedBy,
+        user.hash,
+        id,
+      ],
     }
 
     return selectRows(await db.query({ query }))[0]

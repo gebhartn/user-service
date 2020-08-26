@@ -3,13 +3,13 @@ drop table if exists users;
 create table users (
   id serial primary key not null,
   email text unique not null,
-  first_name text,
-  last_name text,
+  "firstName" text,
+  "lastName" text,
   password text not null,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  updated_by_user_id int,
-  hash_code text
+  "createdAt" timestamptz not null default now(),
+  "updatedAt" timestamptz not null default now(),
+  "updatedBy" int,
+  hash text
 );
 
 create index users_email_idx on users(email);
@@ -17,7 +17,7 @@ create index users_email_idx on users(email);
 create or replace function trigger_set_timestamp()
 returns trigger as $$
 begin
-  new.updated_at = now();
+  new."updatedAt" = now();
   return new;
 end;
 $$ language plpgsql;

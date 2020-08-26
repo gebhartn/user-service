@@ -1,5 +1,5 @@
 import { createHash } from 'crypto'
-import { name, internet } from 'faker'
+import { name, internet, random } from 'faker'
 import { hashSync } from 'bcryptjs'
 
 function md5(text) {
@@ -20,6 +20,7 @@ export function makeFakeUser(overrides) {
     password: hashSync(password, 8),
     createdOn: new Date().toUTCString(),
     updatedOn: new Date().toUTCString(),
+    updatedBy: random.number({ min: 1, max: 500 }),
   }
 
   user.hash = md5(email + (firstName || '') + (lastName || ''))

@@ -38,7 +38,7 @@ describe('edit user', () => {
     const existing = await usersDb.findById({ id: 1 })
     const user = await editUser({
       id: 1,
-      changes: { first_name: faker.name.firstName },
+      changes: { firstName: faker.name.firstName },
     })
 
     delete user.password
@@ -59,7 +59,7 @@ describe('edit user', () => {
       ...fake,
     })
 
-    return expect(user.hash_code).toBe(existing.hash_code)
+    return expect(user.hash).toBe(existing.hash)
   })
 
   it('should edit a user', async () => {
@@ -68,11 +68,11 @@ describe('edit user', () => {
     const fake = makeFakeUser()
     await usersDb.insert({ user: fake })
 
-    const userEdit = makeFakeUser({ id: 1 })
+    const userEdit = makeFakeUser()
 
     const existingUser = await usersDb.findById({ id: 1 })
     const newUser = await editUser({ ...userEdit, id: 1 })
 
-    return expect(newUser.hash_code).not.toBe(existingUser.hash_code)
+    return expect(newUser.hash).not.toBe(existingUser.hash)
   })
 })
