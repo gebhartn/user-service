@@ -36,7 +36,6 @@ describe('users database', () => {
     const found = await usersDb.findAll({ count: 2, start: 0 })
 
     expect(found.length).toBe(2)
-    expect(found[found.length - 1].id).toBe(found.length)
   })
 
   it('finds a user by id', async () => {
