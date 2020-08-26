@@ -7,13 +7,11 @@ describe('list users', () => {
   let usersDb, listUsers
 
   beforeAll(async () => {
-    await makeDb().clear()
-
     usersDb = makeUsersDb({ makeDb })
     listUsers = makeListUsers({ usersDb })
   })
 
-  afterAll(async () => {
+  afterEach(async () => {
     await makeDb().clear()
   })
 
@@ -23,7 +21,7 @@ describe('list users', () => {
 
     const result = await listUsers({ start: -1, count: 10 })
 
-    expect(result[0].id).toBe(1)
+    return expect(result[0].id).toBe(1)
   })
 
   it('sets count to 10 if greater than 10', async () => {
@@ -46,7 +44,7 @@ describe('list users', () => {
 
     const result = await listUsers({ start: 0, count: 100 })
 
-    expect(result[9].id).toBe(10)
+    return expect(result.length).toBe(10)
   })
 
   it('returns users without count or start', async () => {
@@ -55,7 +53,7 @@ describe('list users', () => {
 
     const result = await listUsers({})
 
-    expect(result[0].id).toBe(1)
+    return expect(result[0].id).toBe(1)
   })
 
   it('returns users without arguments', async () => {
@@ -64,6 +62,6 @@ describe('list users', () => {
 
     const result = await listUsers()
 
-    expect(result[0].id).toBe(1)
+    return expect(result[0].id).toBe(1)
   })
 })

@@ -14,7 +14,9 @@ export function makeDb() {
   }
 
   async function clear() {
-    await pool.query('delete from users')
-    await pool.query('alter sequence users_id_seq restart with 1')
+    await Promise.all([
+      pool.query('delete from users'),
+      pool.query('alter sequence users_id_seq restart with 1'),
+    ])
   }
 }

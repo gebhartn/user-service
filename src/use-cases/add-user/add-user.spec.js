@@ -7,25 +7,23 @@ describe('add user', () => {
   let usersDb
 
   beforeAll(() => {
-    makeDb().clear()
     usersDb = makeUsersDb({ makeDb })
   })
 
-  afterAll(async () => {
+  afterEach(async () => {
     await makeDb().clear()
   })
 
-  it('inserts a user to the database', async done => {
+  it('inserts a user to the database', async () => {
     const newUser = makeFakeUser()
     const addUser = makeAddUser({ usersDb })
 
     const inserted = await addUser(newUser)
-    expect(inserted.email).toBe(newUser.email)
 
-    done()
+    return expect(inserted.email).toBe(newUser.email)
   })
 
-  it('throws if a user already exists', async done => {
+  it('throws if a user already exists', async () => {
     const newUser = makeFakeUser()
     const addUser = makeAddUser({ usersDb })
 
@@ -34,9 +32,7 @@ describe('add user', () => {
     try {
       await addUser(newUser)
     } catch (e) {
-      expect(e.message).toMatch('User already exists')
+      return expect(e.message).toMatch('User already exists')
     }
-
-    done()
   })
 })

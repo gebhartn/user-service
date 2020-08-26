@@ -6,11 +6,10 @@ describe('users database', () => {
   let usersDb
 
   beforeEach(async () => {
-    await makeDb().clear()
     usersDb = makeUsersDb({ makeDb })
   })
 
-  afterAll(async () => {
+  afterEach(async () => {
     await makeDb().clear()
   })
 
@@ -103,9 +102,8 @@ describe('users database', () => {
     )
 
     const before = await usersDb.findAll({ count: 10, start: 0 })
-    const { id } = before[before.length - 1]
 
-    await usersDb.remove({ id })
+    await usersDb.remove({ id: 1 })
     const after = await usersDb.findAll({ count: 10, start: 0 })
 
     expect(after.length).toBe(before.length - 1)

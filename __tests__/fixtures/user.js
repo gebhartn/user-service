@@ -22,7 +22,7 @@ export function makeFakeUser(overrides) {
     updatedOn: new Date().toUTCString(),
   }
 
-  user.hash = md5(email + firstName + lastName)
+  user.hash = md5(email + (firstName || '') + (lastName || ''))
 
   return {
     ...user,

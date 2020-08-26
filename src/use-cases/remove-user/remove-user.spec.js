@@ -7,11 +7,10 @@ describe('edit user', () => {
   let usersDb
 
   beforeAll(async () => {
-    await makeDb().clear()
     usersDb = makeUsersDb({ makeDb })
   })
 
-  afterAll(async () => {
+  afterEach(async () => {
     await makeDb().clear()
   })
 
@@ -19,7 +18,9 @@ describe('edit user', () => {
     const removeUser = makeRemoveUser({ usersDb })
     const user = makeFakeUser({ id: undefined })
 
-    expect(removeUser({ id: user.id })).rejects.toThrow('You must supply an ID')
+    return expect(removeUser({ id: user.id })).rejects.toThrow(
+      'You must supply an ID'
+    )
   })
 
   it('should error with empty object', async () => {
@@ -32,7 +33,7 @@ describe('edit user', () => {
     const removeUser = makeRemoveUser({ usersDb })
     const result = await removeUser({ id: 5 })
 
-    expect(result.count).toBe(0)
+    return expect(result.count).toBe(0)
   })
 
   it('should hard delete a user when found', async () => {
@@ -43,6 +44,6 @@ describe('edit user', () => {
 
     const result = await removeUser({ id: 1 })
 
-    expect(result.count).toBe(1)
+    return expect(result.count).toBe(1)
   })
 })
