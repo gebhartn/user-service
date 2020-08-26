@@ -31,7 +31,7 @@ database: init
 
 run-dev: init
 	echo "Starting up node server, happy hacking...";
-	yarn start:dev
+	DATABASE_LOCAL=${DATABASE_LOCAL} DATABASE_TEST=${DATABASE_TEST} yarn start:dev
 
 create-schemas: init
 	echo "Writing schema for database(s)...";
