@@ -16,6 +16,5 @@ module.exports = {
     '!**/src/routes/**',
     '!**/src/express-callback/**',
     '!**/src/app/**',
-    '!**/src/*',
   ],
 }

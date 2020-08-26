@@ -8,7 +8,8 @@ import { makeDb } from '../../../__tests__/fixtures/db'
 describe('edit user', () => {
   let usersDb
 
-  beforeAll(() => {
+  beforeAll(async () => {
+    await makeDb().clear()
     usersDb = makeUsersDb({ makeDb })
   })
 
@@ -28,9 +29,12 @@ describe('edit user', () => {
   it('should combine existing user with incoming', async () => {
     const editUser = makeEditUser({ usersDb })
 
-    const existing = await usersDb.findById({ id: 4 })
+    const fake = makeFakeUser()
+    await usersDb.insert({ user: fake })
+
+    const existing = await usersDb.findById({ id: 1 })
     const user = await editUser({
-      id: 4,
+      id: 1,
       changes: { first_name: faker.name.firstName },
     })
 
@@ -43,9 +47,12 @@ describe('edit user', () => {
   it('should return existing if nothing changes', async () => {
     const editUser = makeEditUser({ usersDb })
 
-    const existing = await usersDb.findById({ id: 4 })
+    const fake = makeFakeUser()
+    await usersDb.insert({ user: fake })
+
+    const existing = await usersDb.findById({ id: 1 })
     const user = await editUser({
-      id: 4,
+      id: 1,
       changes: { ...existing },
     })
 
@@ -54,10 +61,14 @@ describe('edit user', () => {
 
   it('should edit a user', async () => {
     const editUser = makeEditUser({ usersDb })
-    const userEdit = makeFakeUser({ id: 3 })
 
-    const existingUser = await usersDb.findById({ id: 3 })
-    const newUser = await editUser({ ...userEdit, id: 3 })
+    const fake = makeFakeUser()
+    await usersDb.insert({ user: fake })
+
+    const userEdit = makeFakeUser({ id: 1 })
+
+    const existingUser = await usersDb.findById({ id: 1 })
+    const newUser = await editUser({ ...userEdit, id: 1 })
 
     expect(newUser.hash_code).not.toBe(existingUser.hash_code)
   })

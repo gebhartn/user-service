@@ -7,6 +7,7 @@ describe('add user', () => {
   let usersDb
 
   beforeAll(() => {
+    makeDb().clear()
     usersDb = makeUsersDb({ makeDb })
   })
 

@@ -13,3 +13,5 @@ export const dbMock = {
 
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : null,
 }
+
+export const port = process.env.PORT || 8080
