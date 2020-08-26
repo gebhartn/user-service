@@ -50,4 +50,15 @@ describe('user', () => {
 
     expect(user.getLastName()).toBe(lastName)
   })
+
+  it('hashes without first + last', () => {
+    let firstName,
+      lastName = undefined
+
+    let user = makeUser({ firstName, lastName })
+
+    expect(user.getHash()).not.toBe(null)
+    expect(user.getFirstName()).toBe(undefined)
+    expect(user.getLastName()).toBe(undefined)
+  })
 })
