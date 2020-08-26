@@ -40,8 +40,6 @@ Alternatively, the [Makefile](Makefile) exposes a means of teardown via `make cl
 
 The [ci](./.github/workflows) script will run the coverage suite automatically upon pushing to master, but to run locally you may use `yarn coverage` or `yarn test` to generate coverage or run the test suite respectively.
 
-Note that as of writing this there is no setup or teardown of the test database, and so there may be edge case where tests fail because of a stateful testing environment.
-
 ## Author
 
 - [Nicholas Gebhart](https://nicholasgebhart.com)
